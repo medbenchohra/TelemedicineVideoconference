@@ -1,0 +1,16 @@
+
+#selfie{
+    width: 20%;
+    position: absolute;
+    left : 0px;
+    top : 0px;
+    z-index: 1;
+}
+
+#activeSpeaker{
+    width:100%;
+    position: absolute;
+    left:0px;
+    top: 0px;
+    z-index: 0;
+}
