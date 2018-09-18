@@ -42,7 +42,7 @@ function conversation(initiator){
 
 function findSocket(socketId){
     var i = 0;
-    while((i<socket.length)&&(sockets[i].id! = socketId)){i++;}
+    while((i<socket.length)&&(sockets[i].id != socketId)){i++;}
     if(i<sockets.length)return socket[i];
     return false;
 }
