@@ -2,6 +2,7 @@ var express = require('express');
 var SIO = require('socket.io');
 
 var doctors = [];
+var
 var sockets=[];
 var conversation=[];
 
@@ -22,3 +23,4 @@ io.on('connection',function(socket){
 
    
 });
+
