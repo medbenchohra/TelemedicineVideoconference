@@ -43,18 +43,38 @@ function logout() {
   socket.emit("logout", {});
 }
 
-/* ============================ Events =============================== */
+/* ======================= Events Listeners =============================== */
 
-socket.on("call",handleCall);
+socket.on("call",ring);
 socket.on("pickup",handlePickup);
 socket.on("hangup",handleHangup);
 socket.on("reject",handleReject);
 socket.on("login",handleLogin);
 socket.on("logout",handleLogout);
 
-/* ============================ Events Handlers =============================== */
+/* ======================= Events Handlers =============================== */
+
+function ring(data) {
+
+}
 
 
+function handlePickup(data) {
+
+}
+
+
+function handleHangup(data) {
+
+}
+
+
+function handleReject(data) {
+
+}
+
+
+/* ======================= Helpers ======================================== */
 
 
 
