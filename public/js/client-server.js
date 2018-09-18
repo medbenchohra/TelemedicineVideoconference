@@ -1,33 +1,76 @@
 
 
-/* calls calleeID
+/* calls calleeId
     @params
-      calleeID : id of the person to be called
-      desciption : browser desciption of the caller
+      calleeId : id of the person to be called
+      description : browser description of the caller
 */
-function call(calleeID, desciption) {
+function call(calleeId, description) {
   socket.emit("call",{
     calleeID: calleeID,
-    desciption: desciption
+    description: description
   });
 }
 
-function pickup() {
-
+function pickup(callerId, description) {
+  socket.emit("pickup", {
+    callerId: callerId,
+    description: description
+  });
 }
 
-function hangup() {
-
+function hangup(callerId) {
+  socket.emit("hangup", {
+    calledId: callerId
+  });
 }
 
-function reject() {
-
+function reject(callerId) {
+  socket.emit("reject", {
+    callerId: callerId
+  });
 }
 
 function login(firstName, lastName, speciality) {
-
+  socket.emit("login", {
+    firstName: firstName,
+    lastName: lastName,
+    speciality: speciality
+  });
 }
 
-function logout(userName) {
-
+function logout() {
+  socket.emit("logout", {});
 }
+
+/* ============================ Events =============================== */
+
+socket.on("call",handleCall);
+socket.on("pickup",handlePickup);
+socket.on("hangup",handleHangup);
+socket.on("reject",handleReject);
+socket.on("login",handleLogin);
+socket.on("logout",handleLogout);
+
+/* ============================ Events Handlers =============================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
