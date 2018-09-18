@@ -13,5 +13,21 @@ function call(calleeID, desciption) {
 }
 
 function pickup() {
-  
+
+}
+
+function hangup() {
+
+}
+
+function reject() {
+
+}
+
+function login(firstName, lastName, speciality) {
+
+}
+
+function logout(userName) {
+
 }
