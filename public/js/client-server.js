@@ -45,12 +45,13 @@ function logout() {
 
 /* ======================= Events Listeners =============================== */
 
-socket.on("call",ring);
-socket.on("pickup",handlePickup);
-socket.on("hangup",handleHangup);
-socket.on("reject",handleReject);
-socket.on("login",handleLogin);
-socket.on("logout",handleLogout);
+socket.on("call", ring);
+socket.on("pickup", handlePickup);
+socket.on("hangup", handleHangup);
+socket.on("reject", handleReject);
+socket.on("login", handleLogin);
+socket.on("logout", handleLogout);
+socket.on("newUser", handle);
 
 /* ======================= Events Handlers =============================== */
 
@@ -75,7 +76,6 @@ function handleReject(data) {
 
 
 /* ======================= Helpers ======================================== */
-
 
 
 
