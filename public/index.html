@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 
@@ -15,45 +17,10 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <!-- contient laliste des utilisateurs connectés-->
-            <div class="col-md-3" id="connectedUsersList">
-
-            </div>
-
-            <!--affiche les different video reçus -->
-            <div class="col-md-9" id="Screen">
-                <div id="mainScreen">
-                    <!-- affiche le local stram en miniature-->
-                    <video id="selfie" autoplay playsinline></video>
-                    <!-- affiche la video de la personne ayant la main pour la parole-->
-                    <video id="activeSpeaker" autoplay playsinline></video>
-                </div>
-
-                <!-- affiche les videos des differentes utilisateurs dans la conversassion -->
-                <div id="videoList">
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="width:400px;">
+   <div class="container-fluid">
+       <div>
            
-    </div>
-
-    <button id="call">call</button>
-    <button id="racrocher">racrocher</button>
-        
-        <script src="js/webrtcConnection.js"></script>
-        <script>
-            getLocalMediaStream();
-            document.getElementById("call").onclick=function(event){
-                console.log(event.target+' '+event.target.id);
-            }
-            document.getElementById("racrocher").onclick=function(event){
-                console.log(event.target+" "+event.target.id);
-            }
-        </script>
+       </div>
+   </div>
 </body>
 </html>
