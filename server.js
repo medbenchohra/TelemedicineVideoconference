@@ -171,6 +171,20 @@ function findSocket(socketId){
     return false;
 }
 
+
+function sendConversationList(user){
+
+    for(var conversation in programedConversations){
+      
+      if (-1<conversation.members.indexof(user.userName)){
+ 
+          user.socket.emit('conversation',{conversation:conversation});
+      }
+    }
+ 
+ }
+
+ 
 //////////////////////////////////////////////////////////////////////
 /*
 

@@ -1,0 +1,28 @@
+function leave(conversationId,userId){
+
+	var id =getConversationByID(conversationId);
+	var convrs =conversations[id];
+
+    forEach(var participant in convrs.participants){
+
+    	socket=findSocket(participants[participant]);
+    	socket.emit('leave',userId);
+    }
+    convrs.participants[userId].delete
+    
+    
+
+};
+
+
+function sendConversationList(user){
+
+   for(var conversation in programedConversations){
+     
+     if (-1<conversation.members.indexof(user.userName)){
+
+     	user.socket.emit('conversation',{conversation:conversation});
+     }
+   }
+
+}
