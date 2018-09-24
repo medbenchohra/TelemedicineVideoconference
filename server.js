@@ -4,9 +4,12 @@ var SIO   =   require('socket.io');
 var users   =   [];
 var sockets  =  [];
 var conversations = [];
+
+//des données de test pour les conversation programmées
 var programmedConversations = [
     {
         id:0,
+        title : "conversation 1",
         moderator : "charef",
         members : [
             "faysal",
@@ -16,6 +19,7 @@ var programmedConversations = [
     },
     {
         id:1,
+        title : "conversation 2",
         moderator :"chohra" ,
         members : [
             "charef",
@@ -25,6 +29,7 @@ var programmedConversations = [
     },
     {
         id:2,
+        title : "conversation 3",
         moderator : "faysal",
         members : [
             "charef",
@@ -34,6 +39,7 @@ var programmedConversations = [
     },
     {
         id:3,
+        title : "conversation 4",
         moderator : "faysal",
         members : [
             "charef",
@@ -43,6 +49,7 @@ var programmedConversations = [
     },
     {
         id:4,
+        title : "conversation 5",
         moderator : "faysal",
         members : [
             "charef",
@@ -51,6 +58,7 @@ var programmedConversations = [
         time : new Date()
     }
 ];
+
 
 
 var app  =  express();
@@ -67,44 +75,48 @@ io.on('connection',function(socket){
     
     //ajouter la socket à la liste des sockets
     sockets[sockets.length] = socket;
+    console.log("someone connected");
 
     /// login
     socket.on("login",function(data){
         console.log("user has logged in");
-        login(data.userName,data.pass,socket);
+        login(data.userName,data.password,socket);
     });
 
-    /// join 
+    /// joindre une conversation 
     socket.on("join", function(data){
         console.log("user joined ")
         join(data.convId,socket.id);
     });
 
-    /// leave
+    /// quitter une conversation 
     socket.on("leave", function(data){
         leave(data.convId,socket.id);
     });
 
-    /// logout
+    /// deconnecter
     socket.on("logout",function(data){
         logout(socket.id);
     });
 
+    ///dsp: envoyer la description de la session
     socket.on('dsp',function(data){
         dsp(data.description,socket.id,data.reseverId); 
     });;
 
-    ///ice
+    ///ice: envoyer le candidat ice
     socket.on('ice',function(data){
         ice(data.ice,socket.id,data.reseverId);
     });
    
 });
 
-function  login(userName,pass,socket){
+
+///fonction de connection 
+function  login(userName,password,socket){
     // a changer avec l'arrive de la base de données 
     ///-----------------------------------------------
-    if(pass){
+    if(password){
         var userInstance = new user(userName,socket);
         sendConversationList(userInstance);
 
@@ -117,19 +129,23 @@ function  login(userName,pass,socket){
 
 }
 
+/// fonction de deconnexion
 function logout(userId){
 
 }
 
+
+/// fonction de joindre une conversation
 function join(convId,userId){
     var userIndex = findUserIndexById(userId);
     if(userIndex>-1){
         var convIndex = findConversationById(convId);
         if(convIndex>-1){
+            if(users[userIndex].socket.id!=conversation[convIndex].moderator.socket.id)
             conversations[convIndex].broadcast("join",{senderId : userId});
             conversations[convIndex].add(users[userIndex]);
-        }else if(createConversation(convId)){
-            join(convId,userId);
+        }else if(createConversation(convId,userId)){
+            //join(convId,userId);
         }else{
             console.log("converssation doesn't exist");
         }
@@ -138,6 +154,7 @@ function join(convId,userId){
     }
 }
 
+/// fonction de quitter une conversation
 function leave(convId,userId){
     var convIndex = findConversationById(convId);
     if(convIndex>-1){
@@ -148,6 +165,8 @@ function leave(convId,userId){
     }
 }
 
+
+///fonction d'envoie de la description de la session
 function dsp(description,senderId,reseverId){
 
     var user=findUserIndexById(reseverId);
@@ -158,9 +177,10 @@ function dsp(description,senderId,reseverId){
      
 }
 
+/// fonction de l'envoi du candidat ice
 function ice(ice,senderId,reseverId){
     var user=findUserIndexById(reseverId);
-    users[user].socket.emit('dsp',{
+    users[user].socket.emit('ice',{
         ice:ice,
         senderId:senderId
     });
@@ -212,7 +232,7 @@ function getMemeber(userId){
 }
 
 function broadcast(event,data,convId){
-    this.moderator.emit(event,data);
+    this.moderator.socket.emit(event,data);
     for(user in this.memebers){
         user.socket.emit(event,data);
     }
@@ -256,23 +276,31 @@ function findSocket(socketId){
 }
 
 function sendConversationList(user){
-
-    for(var conversation in programedConversations){
-      
-        if (-1<conversation.members.indexof(user.userName)){
-    
-            user.socket.emit('conversation',{conversation:conversation});
+    console.log("sending concerned conversation list");
+    for(var i in programmedConversations){
+        if (isConcerned(user,programmedConversations[i]))
+        {
+            user.socket.emit('conversation',{conversation:programmedConversations[i]});
         }
     }
 }
 
-function createConversation(convId){
+function isConcerned(user,conversation){
+    var test1 = conversation.moderator == user.userName;
+    var test2 = conversation.members.indexOf(user.userName)>-1;
+    return test1 || test2;
+}
+
+function createConversation(convId,userId){
     var index = findProgrammedConversation(convId);
     if(index>-1){
         var moderatorIndex = findUserIndexByUsername(programmedConversations[index].moderator);
         if(moderatorIndex>-1){
             conversations.push(new conversation(users[moderatorIndex],
                 programmedConversations[index].id));
+            if(users[moderatorIndex].socket.id!=userId){
+                join(convId,userId);
+            }
             return true;
         }else{
             console.log("le moderateur n'est pas encore connecte");
@@ -283,9 +311,9 @@ function createConversation(convId){
     return false;
 }
 
-function findUserIndexByUsername(username){
+function findUserIndexByUsername(userName){
     var i = 0;
-    while((i<users.length)&&(users[i].username!=username))i++;
+    while((i<users.length)&&(users[i].userName!=userName))i++;
     if(i<users.length)return i;
     return -1;
 }

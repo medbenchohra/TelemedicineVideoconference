@@ -17,10 +17,33 @@
 </head>
 
 <body>
-   <div class="container-fluid">
-       <div>
-           
-       </div>
+    <div id="control">
+        <button id="login">connecter</button>
+        <button id="logout" disabled>deconnecter</button>
+    </div>
+    <div>
+        <div id="conversations-list">
+
+        </div>
+
+        <div id="screen"> 
+            <video id="selfie" autoplay playsinline></video>
+            <video id="active-speaker"autoplay playsinline></video>
+        </div>
+    </div>
+   
+   <div id="video-list">
+
    </div>
+
+   <script src="js/client-attributes.js"></script>
+   <script src="js/client-config.js"></script>
+   <script src="js/client-ui.js"></script>
+   <script src="js/client.js"></script>
+   <script src="js/client-server.js"></script>
+   <script>
+       //login('faysal','ahviv');
+       //join(2);
+   </script>
 </body>
 </html>
