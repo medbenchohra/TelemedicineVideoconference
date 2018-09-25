@@ -137,22 +137,31 @@ function logout(userId){
 
 /// fonction de joindre une conversation
 function join(convId,userId){
-    var userIndex = findUserIndexById(userId);
-    if(userIndex>-1){
-        var convIndex = findConversationById(convId);
-        if(convIndex>-1){
-            if(users[userIndex].socket.id!=conversation[convIndex].moderator.socket.id)
-            conversations[convIndex].broadcast("join",{senderId : userId});
-            conversations[convIndex].add(users[userIndex]);
-        }else if(createConversation(convId,userId)){
-            //join(convId,userId);
-        }else{
-            console.log("converssation doesn't exist");
-        }
-    }else{
-        console.log("user doesn't exist");
-    }
+   var conversation = getConversation(convId);
+   if(Conversation){
+        user = findUserById(userId);
+        conversation.add(user);
+        if(conversation.setModerator(user))user.socket.emit("joinSuccess",{moderator : true});
+        else user.socket.emit("joinSuccess",{moderator : false});
+   }
 }
+
+function getConversation(convId){
+    var conversation;
+    if(conversation = findInCurrentConversations(convId))return conversation;
+    else if(conversation = createConversation(convId)) return conversation;
+    return null;
+}
+
+
+function createConversation(convId){
+    var programmedConv = findInProgrammedConversations(convId);
+    if(programmedConv){
+        return new conversation(programmedConv);
+    }
+    return null;
+}
+
 
 /// fonction de quitter une conversation
 function leave(convId,userId){
@@ -187,10 +196,11 @@ function ice(ice,senderId,reseverId){
 }
 //// classess //////////////////////////////////////////////////////////
 /// classe: conversation
-function conversation(moderator,id){
+function conversation(config){
     //properrties
-    this.id = id;
-    this.moderator = moderator;
+    this.config = config;
+    this.id = config.id;
+    this.moderator = null;
     this.memebers = [];
 
     //methods
@@ -199,6 +209,7 @@ function conversation(moderator,id){
     this.get = getMemeber;
     this.getIndex = getMemeberIndex;
     this.broadcast = broadcast;
+    this.setModerator = setModerator;
 }
 // classe conversation : methods
 function addMemeber(user){
@@ -208,7 +219,7 @@ function addMemeber(user){
 function removeMemeber(userId){
     var i = this.getMemeberIndex(userId);
     if(i>-1){
-        this.memebers[i]=this.members[this.memebers.length - 1];
+        if(i<this.memebers.length - 1)this.memebers[i]=this.members[this.memebers.length - 1];
         this.memebers.pop();
     }else{
         console.log("user doesn't exist");
@@ -231,8 +242,15 @@ function getMemeber(userId){
     }
 }
 
+function setModerator(user){
+    if(this.config.moderator==user.userName){
+        this.moderator=user;
+        return true;
+    }
+    return false;
+}
+
 function broadcast(event,data,convId){
-    this.moderator.socket.emit(event,data);
     for(user in this.memebers){
         user.socket.emit(event,data);
     }
@@ -254,6 +272,14 @@ function findUserIndexById(userId){
     while ((i<users.length)&&(userId  !=  users[i].socket.id))i++;
     if (i<users.length) return i;
     return -1;
+}
+
+function findUserById(userId){
+    var index = findUserIndexById(userId);
+    if(index>-1){
+        return users[index];
+    }
+    return null;
 }
 
 function findConversationById(convId){
@@ -291,25 +317,7 @@ function isConcerned(user,conversation){
     return test1 || test2;
 }
 
-function createConversation(convId,userId){
-    var index = findProgrammedConversation(convId);
-    if(index>-1){
-        var moderatorIndex = findUserIndexByUsername(programmedConversations[index].moderator);
-        if(moderatorIndex>-1){
-            conversations.push(new conversation(users[moderatorIndex],
-                programmedConversations[index].id));
-            if(users[moderatorIndex].socket.id!=userId){
-                join(convId,userId);
-            }
-            return true;
-        }else{
-            console.log("le moderateur n'est pas encore connecte");
-        }
-    }else{
-        console.log("cette conversation n'existe pas");
-    }
-    return false;
-}
+
 
 function findUserIndexByUsername(userName){
     var i = 0;
