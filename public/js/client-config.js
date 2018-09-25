@@ -10,3 +10,8 @@ let iceServersConfig = {'iceServers':[
         {'url':'stun.zadarma.com:3478'},
         {'url':'stun.voipcheap.com:3478'}
     ]};
+
+let mediaContraints = {
+    video : true,
+    audio : true
+}

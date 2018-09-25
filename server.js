@@ -85,7 +85,8 @@ io.on('connection',function(socket){
 
     /// joindre une conversation 
     socket.on("join", function(data){
-        console.log("user joined ")
+        console.log("user joined conversation "+data.convId);
+
         join(data.convId,socket.id);
     });
 
@@ -137,27 +138,35 @@ function logout(userId){
 
 /// fonction de joindre une conversation
 function join(convId,userId){
-   var conversation = getConversation(convId);
-   if(Conversation){
-        user = findUserById(userId);
-        conversation.add(user);
-        if(conversation.setModerator(user))user.socket.emit("joinSuccess",{moderator : true});
-        else user.socket.emit("joinSuccess",{moderator : false});
+    console.log("joining conversation "+convId);
+   var conv = getConversation(convId);
+   if(conv){
+        user1 = findUserById(userId);
+        conv.add(user1);
+        if(conv.setModerator(user1)){
+            user1.socket.emit("joinSuccess",{moderator : true});
+        }
+        else user1.socket.emit("joinSuccess",{moderator : false});
    }
 }
 
 function getConversation(convId){
-    var conversation;
-    if(conversation = findInCurrentConversations(convId))return conversation;
-    else if(conversation = createConversation(convId)) return conversation;
-    return null;
+    console.log("getting conversation "+convId);
+    var conv;
+    conv = findInCurrentConversations(convId);
+    if(conv>-1)return conversations[conv];
+    else return createConversation(convId);
 }
 
 
+
 function createConversation(convId){
-    var programmedConv = findInProgrammedConversations(convId);
-    if(programmedConv){
-        return new conversation(programmedConv);
+    var programmedConv = findProgrammedConversation(convId);
+    if(programmedConv>-1){
+        console.log("creating the conversation");
+        var conv = new conversation(programmedConversations[programmedConv]);
+        conversations.push(conv);
+        return conv;
     }
     return null;
 }
@@ -178,8 +187,8 @@ function leave(convId,userId){
 ///fonction d'envoie de la description de la session
 function dsp(description,senderId,reseverId){
 
-    var user=findUserIndexById(reseverId);
-    users[user].socket.emit('dsp',{
+    var user1=findUserIndexById(reseverId);
+    users[user1].socket.emit('dsp',{
         description:description,
         senderId:senderId
     });
@@ -188,8 +197,8 @@ function dsp(description,senderId,reseverId){
 
 /// fonction de l'envoi du candidat ice
 function ice(ice,senderId,reseverId){
-    var user=findUserIndexById(reseverId);
-    users[user].socket.emit('ice',{
+    var user1=findUserIndexById(reseverId);
+    users[user1].socket.emit('ice',{
         ice:ice,
         senderId:senderId
     });
@@ -204,7 +213,8 @@ function conversation(config){
     this.memebers = [];
 
     //methods
-    this.add = addMemeber;
+    this.add= addMemeber;
+    
     this.remove = removeMemeber;
     this.get = getMemeber;
     this.getIndex = getMemeberIndex;
@@ -212,8 +222,8 @@ function conversation(config){
     this.setModerator = setModerator;
 }
 // classe conversation : methods
-function addMemeber(user){
-    this.memebers[this.memebers.length] = user;
+function addMemeber(user1){
+    this.memebers[this.memebers.length] = user1;
 }
 
 function removeMemeber(userId){
@@ -242,17 +252,18 @@ function getMemeber(userId){
     }
 }
 
-function setModerator(user){
-    if(this.config.moderator==user.userName){
-        this.moderator=user;
+function setModerator(user1){
+    console.log("setting moderator");
+    if(this.config.moderator==user1.userName){
+        this.moderator=user1;
         return true;
     }
     return false;
 }
 
 function broadcast(event,data,convId){
-    for(user in this.memebers){
-        user.socket.emit(event,data);
+    for(user1 in this.memebers){
+        user1.socket.emit(event,data);
     }
 }
 
@@ -282,9 +293,10 @@ function findUserById(userId){
     return null;
 }
 
-function findConversationById(convId){
+function findInCurrentConversations(convId){
     var i = 0;
-    while((i<conversations.length)&&(conversations[i].id!=convId))i++;
+    console.log("seeking conversation ")
+    while((i<conversations.length)&&(conversations[i].id!=convId)){i++;}
     if(i<conversations.length)return i;
     return -1;
 }
@@ -301,23 +313,22 @@ function findSocket(socketId){
     return -1;
 }
 
-function sendConversationList(user){
+function sendConversationList(user1){
     console.log("sending concerned conversation list");
     for(var i in programmedConversations){
-        if (isConcerned(user,programmedConversations[i]))
+        if (isConcerned(user1,programmedConversations[i]))
         {
-            user.socket.emit('conversation',{conversation:programmedConversations[i]});
+            user1.socket.emit('conversation',{conv:programmedConversations[i]});
+            console.log(" "+i+" : "+programmedConversations[i].title);
         }
     }
 }
 
-function isConcerned(user,conversation){
-    var test1 = conversation.moderator == user.userName;
-    var test2 = conversation.members.indexOf(user.userName)>-1;
+function isConcerned(user1,conv){
+    var test1 = conv.moderator == user1.userName;
+    var test2 = conv.members.indexOf(user1.userName)>-1;
     return test1 || test2;
 }
-
-
 
 function findUserIndexByUsername(userName){
     var i = 0;
@@ -328,7 +339,9 @@ function findUserIndexByUsername(userName){
 
 function findProgrammedConversation(convId){
     var i=0;
+    console.log(convId);
     while((i<programmedConversations.length)&&(programmedConversations[i].id!=convId))i++;
+    console.log(i);
     if(i<programmedConversations.length) return i;
     return -1;
 }

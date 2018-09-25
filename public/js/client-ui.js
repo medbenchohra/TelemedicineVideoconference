@@ -1,8 +1,11 @@
 
 //ajouter une conversation a la liste afichee
 function addToConversationsContainer(conversation){
-    $("#conversations-list").append(
-        "<div id='conv-"+conversation.id+"' class='conversation'> <p><strong>"+conversation.title+"</strong></p></div>");
+    $("#conversations-list").append("<div id='conv-"+conversation.id+"' class='conversation'> <p id='co-"+conversation.id+"'><strong>"+conversation.title+"</strong></p></div>");
+    $("#conv-"+conversation.id).on('click',function(e){
+        onConversation(e.target);
+        //$("conv-"+conversation.id).css('background-color','green');
+    });
 }
 
 
@@ -39,7 +42,31 @@ function showConversationList(){
     $("#conversations-list").show();
 }
 
+function onConversation(conv){
+    console.log(conv.id);
+    var id = conv.id.split('-')[1];
+    console.log("id = "+id);
+    var convId = parseInt(id);
+    console.log("requesting to join conversation "+convId);
+    join(convId);
+}
 
-function setEventLisners(){
+function onLogIn(){
+    var userName = $("#username").val();
+    var passWord = $("#password").val();
+    login(userName,passWord);
+    $("#login").prop("disabled",true);
+    $("#logout").prop("disabled",false);
+    
+}
 
+function onLogOut(){
+    $("#login").prop("disabled",false);
+    $("#logout").prop("disabled",true);
+}
+
+
+function setEventListeners(){
+    $("#login").on('click',onLogIn);
+    $("#logout").on('click',onLogOut);
 }

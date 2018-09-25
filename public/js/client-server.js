@@ -2,11 +2,12 @@ socket = io.connect(serverAdress);
 
 
 socket.on("conversation", function(data){
-    addToConversationsList(data.conversation);
+    addToConversationsList(data.conv);
 });
 
-socket.on("", function(data){
-
+socket.on("joinSuccess", function(data){
+    console.log("joined successfully");
+    moderator = data.moderator;
 });
 
 socket.on("dsp", function(data){

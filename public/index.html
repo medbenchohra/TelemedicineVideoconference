@@ -18,6 +18,7 @@
 
 <body>
     <div id="control">
+        <button id="conversation">les conversations</button>
         <button id="login">connecter</button>
         <button id="logout" disabled>deconnecter</button>
     </div>
@@ -36,14 +37,27 @@
 
    </div>
 
+   <div id="login-form-container">
+       <form id="login-form">
+           <label>USERNAME</label> 
+           <input id="username" name="username" type="text" placeholder="USERNAME">
+           <label>PASSWORD</label>
+           <input id="password" name="password" type="password" placeholder="PASSWORD">
+       </form>
+   </div>
+
    <script src="js/client-attributes.js"></script>
-   <script src="js/client-config.js"></script>
-   <script src="js/client-ui.js"></script>
-   <script src="js/client.js"></script>
-   <script src="js/client-server.js"></script>
+   <script src="js/client-webrtc.js"    ></script>
+   <script src="js/client-config.js"    ></script>
+   <script src="js/client-ui.js"        ></script>
+   <script src="js/client.js"           ></script>
+   <script src="js/client-server.js"    ></script>
    <script>
        //login('faysal','ahviv');
        //join(2);
+       getLocalStream();
+       setEventListeners();
+
    </script>
 </body>
 </html>
