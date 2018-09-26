@@ -1,10 +1,12 @@
 
 //ajouter une conversation a la liste afichee
 function addToConversationsContainer(conversation){
-    $("#conversations-list").append("<div id='conv-"+conversation.id+"' class='conversation'> <p id='co-"+conversation.id+"'><strong>"+conversation.title+"</strong></p></div>");
+    var HTML = "<p id='title-"+conversation.id+"'>"+conversation.title+"</p>";
+    var HTML = "<div class='conversation' id='conv-"+conversation.id +"'>"+ HTML +"</div>";
+    $("#conversations-list").append(HTML);
     $("#conv-"+conversation.id).on('click',function(e){
         onConversation(e.target);
-        //$("conv-"+conversation.id).css('background-color','green');
+        $("conv-"+conversation.id).css('background-color','red');
     });
 }
 

@@ -1,7 +1,13 @@
 socket = io.connect(serverAdress);
 
+socket.on("user",function(data){
+    console.log("got new user "+data.userName);
+    addUser(data.userId,data.userName);
+    addUserVideo(data.userId);
+});
 
 socket.on("conversation", function(data){
+    console.log("conversation", data.conv);
     addToConversationsList(data.conv);
 });
 
@@ -10,20 +16,24 @@ socket.on("joinSuccess", function(data){
     moderator = data.moderator;
 });
 
-socket.on("dsp", function(data){
-    receivedSdp(data.senderId,data.sdp);
+socket.on("sdp", function(data){
+    console.log('received SDP');
+    receivedSdp(data.senderId,data.description,data.offer);
 });
 
 socket.on("ice", function(data){
+    console.log('received ICE');
     receivedIceCandidate(data.senderId,data.ice);
 });
 
 socket.on("leave", function(data){
+    console.log('user left conversation');
     userLeftConversation(data.userId);
 });
 
 socket.on("join", function(data){
-    userJoinedConversation(data.userId);
+    console.log('user joined conversation '+ data.userName);
+    userJoinedConversation(data.userId,data.userName);
 });
 
 function addToConversationsList(conversation){
@@ -33,10 +43,11 @@ function addToConversationsList(conversation){
     console.log("added conversation to list");
 }
 
-function receivedSdp(senderId,sdp){
+function receivedSdp(senderId,description,offer){
     var userIndex = getUserIndexById(senderId);
-    connectedUsers[userIndex].peer.setRemoteDescription(sdp);
+    connectedUsers[userIndex].peer.setRemoteDescription(description);
     ///...
+    if(offer) connectedUsers[userIndex].answer(senderId);
     console.log("received session description");
 }
 
@@ -56,16 +67,17 @@ function userLeftConversation(userId){
     console.log("user left conversation");
 }
 
-function userJoinedConversation(userId){
-    addUser(userId);
+function userJoinedConversation(userId,userName){
+    var user = addUser(userId,userName);
     addUserVideo(userId);
     ///...
+    user.offer(userId);
     console.log("user joined conversation");
 }
 
 
 function login(userName,password){
-    
+    console.log('login ');
     socket.emit('login',{
         userName:userName,
         password:password
@@ -73,29 +85,19 @@ function login(userName,password){
 }
 
 function join(convId){
-
+    console.log('joining conversation');
     socket.emit('join',{convId:convId});
 
 }
 
 function leave(convId){
+    console.log('leaving Conversation');
     socket.emit('leave',{convId:convId});
 }
 
 function logout(){
+    console.log("logout");
     socket.emit('logout');
 }
 
-function sendSessionDescription(description,receiverId){
-    socket.emit('dsp',{
-        description : description,
-        receiverId : receiver
-    });
-}
 
-function sendIceCandidate(description,receiverId){
-    socket.emit('ice',{
-        ice:ice,
-        receiverId:receiverId
-    });
-}

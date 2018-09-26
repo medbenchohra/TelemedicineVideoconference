@@ -1,5 +1,6 @@
-function user(id,peer){
+function user(id,userName,peer){
     this.id = id;
+    this.userName = userName;
     this.peer = peer;
 
     this.answer = sendSDPAnswer;
@@ -17,9 +18,11 @@ function getUserIndexById(userId){
    return getPeerIndexByUserId(userId);
 }
 
-function addUser(userId){
+function addUser(userId,userName){
     console.log("adding user to list");
-    connectedUsers.push(new user(userId,createPeer()));
+    var newUser = new user(userId,userName,createPeer(userId));
+    connectedUsers.push(newUser);
+    return newUser;
 }
 
 function removeUser(userId){
@@ -31,16 +34,14 @@ function removeUser(userId){
         }else connectedUsers.pop();
     }
 }
-function createPeer(){
-
-}
 
 
 function sendSDPOffer(receiverId){
     console.log("sending SDP offer");
-    this.peer.createOffer(function(description){
-        this.peer.setLocalDescription(description);
-        socket.emit("sdpOffer",{receiverId : receiverId,description : description});
+    var peerr = this.peer;
+    peerr.createOffer(function(description){
+        peerr.setLocalDescription(description);
+        socket.emit("sdp",{receiverId : receiverId,description : description,offer : true});
     },function(error){
         console.log("failed to make an offer");
     });
@@ -49,11 +50,12 @@ function sendSDPOffer(receiverId){
 
 function sendSDPAnswer(receiverId){
     console.log("sending SDP answer");
-    this.peer.creatAnswer(function(description){
-        this.peer.setLocalDescription(description);
-        socket.emit("sdpAnswer",{receiverId : receiverId,description : description});
+    var peerr = this.peer;
+    peerr.createAnswer(function(description){
+        peerr.setLocalDescription(description);
+        socket.emit("sdp",{receiverId : receiverId,description : description,offer : false});
     },function(error){
         console.log("creating answer failed");
-    })
+    });
 }
 
