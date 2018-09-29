@@ -124,9 +124,9 @@ function  login(userName,password,socket){
 
         users.push(userInstance);
     }else{
-        console.log("pass wrong");
+        console.log("wrong password");
     }
-    ///-------------------------------------------
+    ///-------------------------------
 
 
 }
