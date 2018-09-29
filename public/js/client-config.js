@@ -1,5 +1,7 @@
 
-let serverAddress = "http://localhost:3000";
+//let serverAddress = "https://<server>:8080";//connexion web
+//let serverAddress = "http://localhost:8080";//connection localhost
+let serverAddress = "192.168.43.52:8080";//connexion local
 
 let iceServersConfig = {'iceServers':[ 
         {'url':'stun:stun2.l.google.com:19302'},
