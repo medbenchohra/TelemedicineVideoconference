@@ -75,4 +75,6 @@ p{
 
 .video-item {
     z-index: 2;
+    width: 200px;
+    height: auto;
 }
