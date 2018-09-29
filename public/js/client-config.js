@@ -1,5 +1,7 @@
 
-let serverAddress = "http://localhost:8080";
+// let serverAddress = "http://localhost:8080"; //when working localy
+let serverAddress = "http://webrtc-telemedicine-cdta.appspot.com:8080"; //when hosted
+
 
 let iceServersConfig = {'iceServers':[ 
         {'url':'stun:stun2.l.google.com:19302'},
