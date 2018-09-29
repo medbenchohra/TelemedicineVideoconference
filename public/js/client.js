@@ -1,3 +1,4 @@
+
 function user(id,userName,peer){
     this.id = id;
     this.userName = userName;
@@ -35,7 +36,6 @@ function removeUser(userId){
     }
 }
 
-
 function sendSDPOffer(receiverId){
     console.log("sending SDP offer");
     var peerr = this.peer;
@@ -46,7 +46,6 @@ function sendSDPOffer(receiverId){
         console.log("failed to make an offer");
     });
 }
-
 
 function sendSDPAnswer(receiverId){
     console.log("sending SDP answer");

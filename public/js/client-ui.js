@@ -11,14 +11,14 @@ function addToConversationsContainer(conversation){
 }
 
 
-//ajouter le stream d'un utilisateur à la liste des stream
+//ajouter le stream d'un utilisateur à la liste des streams
 function addUserVideo(userId){
     $("#video-list").append(
         "<video id='vid-"+userId+"' class='video-item' autoplay playsinline></video>"
     );
 }
 
-//metre en evidence l'utilisateur ayant la main
+//mettre en evidence l'utilisateur ayant la main (active user)
 function highlightActiveUser(exActiveUserId,activUserId){
     $("#vid-"+activUserId).css("box-shadow","#0aff00");
     $("#vid-"+exActiveUserId).css("box-shadow","");

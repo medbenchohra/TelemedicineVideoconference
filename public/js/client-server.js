@@ -1,4 +1,4 @@
-socket = io.connect(serverAdress);
+socket = io.connect(serverAddress);
 
 socket.on("user",function(data){
     console.log("got new user "+data.userName);
@@ -47,7 +47,8 @@ function receivedSdp(senderId,description,offer){
     var userIndex = getUserIndexById(senderId);
     connectedUsers[userIndex].peer.setRemoteDescription(description);
     ///...
-    if(offer) connectedUsers[userIndex].answer(senderId);
+    if(offer) 
+        connectedUsers[userIndex].answer(senderId);
     console.log("received session description");
 }
 

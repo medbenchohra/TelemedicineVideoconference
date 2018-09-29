@@ -1,5 +1,5 @@
 
-let serverAdress = "http://localhost:3000";
+let serverAddress = "http://localhost:3000";
 
 let iceServersConfig = {'iceServers':[ 
         {'url':'stun:stun2.l.google.com:19302'},
@@ -11,7 +11,7 @@ let iceServersConfig = {'iceServers':[
         {'url':'stun:stun.voipcheap.com:3478'}
     ]};
 
-let mediaContraints = {
+let mediaConstraints = {
     video : true,
-    audio : true
+    audio : false
 }
