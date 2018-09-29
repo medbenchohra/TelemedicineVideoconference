@@ -10,20 +10,74 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 
-    <script src="js/jquery.js"></script>
-    <script src="js/adapter.js"></script>
-    <script src="js/socket.io.js"></script>
+    <script src="js/jquery.js"           ></script>
+    <script src="js/adapter.js"          ></script>
+    <script src="js/socket.io.js"        ></script>
+    <script src="js/client-attributes.js"></script>
+    <script src="js/client-webrtc.js"    ></script>
+    <script src="js/client-config.js"    ></script>
+    <script src="js/client-ui.js"        ></script>
+    <script src="js/client.js"           ></script>
+    <script src="js/client-server.js"    ></script>
     
 </head>
 
 <body>
-    <div id="control">
-        <button id="conversation">les conversations</button>
-        <button id="login">connecter</button>
-        <button id="logout" disabled>deconnecter</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-4" id="conversations-list">
+
+            </div>
+
+            <div class="col-md-8 col-sm-8" id="screen">
+                <video id="selfie" autoplay playsinline></video>
+                <video id="active-speaker" autoplay playsinline></video>
+            </div>
+
+            <div class="col-md-2 col-sm-8" id="file-explorer">
+
+            </div>
+
+        </div>
+        <div class="row" >
+            <div class="col-md-12" id="video-list">
+
+            </div>
+        </div>
+        <!--
+        <div class="row">
+            <form role="form" class="form-horizontal col-md-8">
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-2 control-label">
+                        NOM D'UTILISATEUR
+                    </label>
+                    <div class="col-sm-10"> 
+                        <input type="text" class="form-control" id="firstname" placeholder="ENTREZ VOTRE NOM D'UTILISATEUR"> 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">
+                        MOT DE PASSE
+                    </label>
+                    <div class="col-sm-10"> 
+                        <input type="password" class="form-control" id="password"> 
+                    </div>
+                </div>
+                <div class="form-group">
+                        <button id="login" type="submit" class="btn-lg btn-block btn-success">
+                            CONNECTER
+                        </button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            
+        </div>-->
+        
     </div>
+    
     <div>
-        <div id="conversations-list">
+        <!--<div id="conversations-list">
 
         </div>
 
@@ -46,18 +100,55 @@
        </form>
    </div>
 
-   <script src="js/client-attributes.js"></script>
-   <script src="js/client-webrtc.js"    ></script>
-   <script src="js/client-config.js"    ></script>
-   <script src="js/client-ui.js"        ></script>
-   <script src="js/client.js"           ></script>
-   <script src="js/client-server.js"    ></script>
+  
    <script>
        //login('faysal','ahviv');
        //join(2);
        getLocalStream();
        setEventListeners();
 
-   </script>
+   </script> -->
+   </div>
+   <button onclick="document.getElementById('login-popup').style.display='block'" style="width:auto;">Login</button>
+
+<div id="login-popup" class="modal col-md-6">
+  
+  <form class="form-horizontal">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('login-popup').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+        
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById('login-popup');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 </body>
 </html>
