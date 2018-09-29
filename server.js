@@ -61,15 +61,16 @@ var programmedConversations = [
 
 
 
-var app  =  express();
+var app = express();
 
-var server  =  app.listen(8080,function(){
+var server = app.listen(8080,function(){
     console.log("Started listening on port 8080");
 });
 
 app.use(express.static("public"));
 
-var io  =  SIO(server);
+// var io = SIO(server);
+var io = SIO.listen(server);
 
 io.on('connection',function(socket){
     console.log("someone connected");
