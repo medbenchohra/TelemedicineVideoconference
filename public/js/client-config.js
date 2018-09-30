@@ -12,6 +12,9 @@ let iceServersConfig = {'iceServers':[
     ]};
 
 let mediaConstraints = {
-    video : true,
+    video : {
+        width : 853,
+        height : 480
+    },
     audio : false
 }
