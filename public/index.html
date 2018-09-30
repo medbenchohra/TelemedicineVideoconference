@@ -28,97 +28,23 @@
    <button onclick="document.getElementById('login-popup').style.display='block'" style="width:auto;">Se Connecter</button>
 
         <div class="row">
-            <div class="col-md-4 col-sm-4" id="conversations-list">
+            <div class="col-md-3 hidden-sm" id="conversations-list">
 
             </div>
-
-            <div class="col-md-8 col-sm-8" id="screen">
-                <div class="row">
-                    <div class="col-md-12" id="main-screen">
-                        <video id="selfie" autoplay playsinline></video>
-                        <video id="active-speaker" autoplay playsinline></video>
-                    </div>
+            <div class="col-md-7 col-sm-8" id="main-screen">
+                <div id="selfie-container">
+                    <video id="selfie" autoplay playsinline poster="assets/video-placeholder-144.png"></video>
                 </div>
-                <div class="row">
-                    <div id="video-list" class="col-md-12">
+                <div id="active-speaker-container">
+                    <video id="active-speaker" autoplay playsinline poster="assets/video-placeholder-240.png"></video>
+                </div>
+            </div>
+            <div id="video-list" class="col-md-2 col-sm-4">
                   
-                    </div>
-                </div>   
-            </div>
-
-            <div class="col-md-2 col-sm-8" id="file-explorer">
-
-            </div>
-
+            </div>  
         </div>
-        <div class="row" >
-            
-        </div>
-        <!--
-        <div class="row">
-            <form role="form" class="form-horizontal col-md-8">
-                <div class="form-group">
-                    <label for="firstname" class="col-sm-2 control-label">
-                        NOM D'UTILISATEUR
-                    </label>
-                    <div class="col-sm-10"> 
-                        <input type="text" class="form-control" id="firstname" placeholder="ENTREZ VOTRE NOM D'UTILISATEUR"> 
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label">
-                        MOT DE PASSE
-                    </label>
-                    <div class="col-sm-10"> 
-                        <input type="password" class="form-control" id="password"> 
-                    </div>
-                </div>
-                <div class="form-group">
-                        <button id="login" type="submit" class="btn-lg btn-block btn-success">
-                            CONNECTER
-                        </button>
-                </div>
-            </form>
-        </div>
-        <div class="row">
-            
-        </div>-->
-        
+       
     </div>
-    
-    <div>
-        <!--<div id="conversations-list">
-
-        </div>
-
-        <div id="screen"> 
-            <video id="selfie" autoplay playsinline></video>
-            <video id="active-speaker"autoplay playsinline></video>
-        </div>
-    </div>
-   
-   <div id="video-list">
-
-   </div>
-
-   <div id="login-form-container">
-       <form id="login-form">
-           <label>USERNAME</label> 
-           <input id="username" name="username" type="text" placeholder="USERNAME">
-           <label>PASSWORD</label>
-           <input id="password" name="password" type="password" placeholder="PASSWORD">
-       </form>
-   </div>
-
-  
-   <script>
-       //login('faysal','ahviv');
-       //join(2);
-       getLocalStream();
-       setEventListeners();
-
-   </script> -->
-   </div>
 
 <div id="login-popup" class="modal col-md-6">
   

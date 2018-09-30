@@ -3,22 +3,20 @@
 }
 
 #conversations-list{
-    background-color: aqua;
-    /*height:500px;*/
+    height:100%;
     z-index: 1;
-    overflow-y: scroll;
-    display: inline-block;
 }
 
 
 #main-screen{
-    background-color: blue;
+    /*background-color: blue;*/
     height: 400px;
 }
 
 #video-list{
     background-color : red;
-    height: 150px;
+    
+    /*overflow-y: scroll;*/
 }
 
 .conversation{
@@ -32,29 +30,38 @@ p{
     text-align: center;
 }
 
+#selfie-container{
+    padding: 10px;
+}
+
+#active-speaker-container{
+    background-color: #ffffff;
+}
+
 #selfie{
-    width:150px;
-    height: 150px;
-    z-index: 2;
+    width:25%;
+    height: auto;
+    z-index: 3;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0px;
+    left: 0px;
 }
 #active-speaker{
-    width:400px;
-    height: 300px;
+    width:90%;
+    height:auto ;
     z-index: 2;
     position: absolute;
-    top : 70px;
-    left : 150px;
+    top : 15%;
+    left : 10%;
 }
 
 .video-item {
     z-index: 2;
-    width: auto;
-    max-height: 150px;
+    width:100%;
+    height:auto;
+    max-height: 
+    margin:5px 10px 5px 10px;
 }
-
 
 .modal{
     display: none; /* Hidden by default */
@@ -111,20 +118,9 @@ button:hover {
     background-color: #f44336;
 }
 
-/* Center the avatar image inside this container */
-.imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-}
-
-/* Avatar image */
-img.avatar {
-    width: 40%;
-    border-radius: 50%;
-}
 
 /* Add padding to containers */
-.credentials {
+.zcredentials {
     padding: 16px;
 }
 
