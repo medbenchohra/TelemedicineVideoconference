@@ -72,8 +72,36 @@ function setEventListeners(){
     $("#logout").on('click',onLogOut);
 }
 
+
+
+
+
+
+
+
+
 function showSignIn(){
     $("#sign-in").show();
     $("#conference").hide();
     $("#conversations").hide();
+}
+
+function showConference(){
+    $("#conference").show();
+    $("#sign-in").hide();
+    $("#conversations").hide();
+}
+
+function showConversation(){
+    $("#conference").hide();
+    $("#sign-in").hide();
+    $("#conversations").show();
+}
+
+function showLoginError(){
+    $("#login-error").show();
+}
+
+function hideLoginError(){
+    $("#login-error").hide();
 }
