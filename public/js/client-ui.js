@@ -73,13 +73,6 @@ function setEventListeners(){
 }
 
 
-
-
-
-
-
-
-
 function showSignIn(){
     $("#sign-in").show();
     $("#conference").hide();
@@ -92,7 +85,7 @@ function showConference(){
     $("#conversations").hide();
 }
 
-function showConversation(){
+function showConversations(){
     $("#conference").hide();
     $("#sign-in").hide();
     $("#conversations").show();

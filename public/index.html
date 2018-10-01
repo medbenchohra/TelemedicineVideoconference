@@ -34,6 +34,12 @@
     <script src="js/client-ui.js"        ></script>
     <script src="js/client.js"           ></script>
     <script src="js/client-server.js"    ></script>
+
+    <script>
+        $( document ).ready(function() {
+            showSignIn();
+        });
+    </script>
     
 </head>
 
@@ -65,7 +71,7 @@
                     </div>
 
                     <div class="container-login100-form-btn">
-                        <button id="login" class="login100-form-btn">
+                        <button id="login" type="button" class="login100-form-btn">
                             Se Connecter
                         </button>
                     </div>
@@ -85,7 +91,7 @@
     <!-- END of LOGIN Stuff -->
     
 
-    <div class="container-fluid" id="conversations" hidden="true">
+    <div class="container-fluid" id="conversations" >
         <div class="row">
             <div class="col-md-10 col-sm-10 col-xs-12 col-lg-10 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"
             id="conversations-list">
@@ -94,9 +100,7 @@
         </div>
     </div>
 
-    <div class="container" id="conference" hidden="true">
-   <!--<button onclick="document.getElementById('login-popup').style.display='block'" style="width:auto;">Se Connecter</button>
-   -->
+    <div class="container-fluid" id="conference" >
         <div class="row">
             <div class="col-md-10 col-sm-8" id="main-screen">
                 <div id="selfie-container">
@@ -105,6 +109,10 @@
                 <div id="active-speaker-container">
                     <video id="active-speaker" autoplay playsinline poster="assets/video-placeholder-240.png"></video>
                 </div>
+                <div id="control-buttons">
+                    <button id="ask-permission" class="btn-lg btn-success" style="padding-right: 10px: ">Demander La Parole</button>
+                    <button id="leave" class="btn-lg btn-danger">Quitter La Conversation</button>
+                </div>
             </div>
             <div class="col-md-2 col-sm-4">
                 <div id="video-list">
@@ -112,20 +120,12 @@
                 </div>
             </div>  
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <button id="leave" class="btn btn-danger">Quitter La Conversation</button>
-                <button id="ask-permission" class="btn btn-success">Demander La Parole</button>
-            </div>
-        </div>
-       
     </div>
 
-<script>
-    getLocalStream();
-    setEventListeners();
-    // onLogIn();
-</script>
+    <script>
+        setEventListeners();
+        // onLogIn();
+    </script>
 
 <!-- LOGIN Stuff -->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

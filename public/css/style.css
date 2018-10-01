@@ -15,8 +15,9 @@
 
 #video-list{
     margin : 35% 0% 0% 0%;
-    height:400px;
+    /*height:400px;*/
     background-color: #4CAF50;
+    left: 0%
 }
 
 .conversation{
@@ -24,6 +25,8 @@
     border-radius: 10px;
     border : solid black 1px;
     margin : 0px 2px 0px 2px;
+    font-family: Ubuntu-Bold;
+    font-size: 18px;
 }
 
 p{
@@ -61,4 +64,10 @@ p{
     height:auto;
     max-height: 150px;
     margin:5px 10px 5px 10px;
+}
+
+#control-buttons {
+    position: absolute;
+    top: 8%;
+    right: 5%;
 }

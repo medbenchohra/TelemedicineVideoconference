@@ -117,11 +117,12 @@ io.on('connection',function(socket){
 function  login(userName,password,socket){
     // a changer avec l'arrive de la base de données 
     ///-----------------------------------------------
-    if(password){
+    if(password !== '!'){
         var userInstance = new user(userName,socket);
         sendConversationList(userInstance);
         users.push(userInstance);
-        socket.emit("loginSuccess");
+        console.log("loginSuccess");
+        socket.emit("loginSuccess",{});
     }else{
         console.log("pass wrong");
         socket.emit("loginFailed");
@@ -207,17 +208,13 @@ function sdp(description,senderId,receiverId,offer){
 
 /// fonction de l'envoi du candidat ice
 function ice(ice,senderId,receiverId){
-    //var userIndex=findUserIndexById(receiverId);
-    showConnectedUsers();
-    console.log("user id :",receiverId);
     var useri = findUserById(receiverId);
-    console.log(useri);
-    /*users[userIndex]*/
     useri.socket.emit('ice',{
         ice:ice,
         senderId:senderId
     });
 }
+
 //// classess //////////////////////////////////////////////////////////
 /// classe: conversation
 function conversation(config){
@@ -229,7 +226,6 @@ function conversation(config){
 
     //methods
     this.add= addMemeber;
-    
     this.remove = removeMemeber;
     this.get = getMemeber;
     this.getIndex = getMemeberIndex;
@@ -237,6 +233,7 @@ function conversation(config){
     this.setModerator = setModerator;
     this.sendUsersList = sendUsersList;
 }
+
 // classe conversation : methods
 function addMemeber(user1){
     //sendUsersList(user1);

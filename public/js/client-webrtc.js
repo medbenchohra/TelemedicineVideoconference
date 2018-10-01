@@ -30,7 +30,6 @@ function getLocalStream(){
 function gotLocalStream(stream){
     localStream = stream;
     document.getElementById("selfie").srcObject = localStream;
-    //document.getElementById("active-speaker").srcObject = localStream;
 }
 
 function handleIceCandidate(event,userId){
