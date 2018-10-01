@@ -13,14 +13,14 @@ var programmedConversations = [
         moderator : "charef",
         members : [
             "faysal",
-            "chohra"
+            "benchohra"
         ],
         time : new Date()
     },
     {
         id:1,
         title : "conversation 2",
-        moderator :"chohra" ,
+        moderator :"benchohra" ,
         members : [
             "charef",
             "faysal"  
@@ -33,7 +33,7 @@ var programmedConversations = [
         moderator : "faysal",
         members : [
             "charef",
-            "chohra"
+            "benchohra"
         ],
         time : new Date()
     },
@@ -43,7 +43,7 @@ var programmedConversations = [
         moderator : "faysal",
         members : [
             "charef",
-            "chohra"
+            "benchohra"
         ],
         time : new Date()
     },
@@ -53,7 +53,7 @@ var programmedConversations = [
         moderator : "faysal",
         members : [
             "charef",
-            "chohra"
+            "benchohra"
         ],
         time : new Date()
     }
@@ -64,7 +64,7 @@ var programmedConversations = [
 var app  =  express();
 
 var server  =  app.listen(8080,function(){
-    console.log("Started listening on port 8080");
+    console.log("Started listening on port 8080.");
 });
 
 app.use(express.static("public"));
