@@ -14,7 +14,7 @@ function addToConversationsContainer(conversation){
 //ajouter le stream d'un utilisateur à la liste des streams
 function addUserVideo(userId){
     $("#video-list").append(
-        "<video id='vid-"+userId+"' class='video-item' autoplay playsinline></video>"
+        "<video id='vid-"+userId+"' class='video-item' autoplay muted playsinline></video>"
     );
 }
 
@@ -59,9 +59,6 @@ function onLogIn(){
     // var passWord = $("#password").val();
     var passWord = "f";
     login(userName,passWord);
-    $("#login").prop("disabled",true);
-    $("#logout").prop("disabled",false);
-    
 }
 
 function onLogOut(){
@@ -73,4 +70,10 @@ function onLogOut(){
 function setEventListeners(){
     $("#login").on('click',onLogIn);
     $("#logout").on('click',onLogOut);
+}
+
+function showSignIn(){
+    $("#sign-in").show();
+    $("#conference").hide();
+    $("#conversations").hide();
 }

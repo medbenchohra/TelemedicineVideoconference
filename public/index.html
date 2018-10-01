@@ -23,15 +23,22 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        
-   <button onclick="document.getElementById('login-popup').style.display='block'" style="width:auto;">Se Connecter</button>
+    
 
+    <div class="container-fluid" id="conversations">
         <div class="row">
-            <div class="col-md-3 hidden-sm" id="conversations-list">
+            <div class="col-md-10 col-sm-10 col-xs-12 col-lg-10 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"
+            id="conversations-list">
 
             </div>
-            <div class="col-md-7 col-sm-8" id="main-screen">
+        </div>
+    </div>
+
+    <div class="container" id="conference">
+   <!--<button onclick="document.getElementById('login-popup').style.display='block'" style="width:auto;">Se Connecter</button>
+   -->
+        <div class="row">
+            <div class="col-md-10 col-sm-8" id="main-screen">
                 <div id="selfie-container">
                     <video id="selfie" autoplay muted playsinline poster="assets/video-placeholder-144.png"></video>
                 </div>
@@ -39,46 +46,26 @@
                     <video id="active-speaker" autoplay playsinline poster="assets/video-placeholder-240.png"></video>
                 </div>
             </div>
-            <div id="video-list" class="col-md-2 col-sm-4">
-                  
+            <div class="col-md-2 col-sm-4">
+                <div id="video-list">
+
+                </div>
             </div>  
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button id="leave" class="btn btn-danger">Quitter La Conversation</button>
+                <button id="ask-permission" class="btn btn-success">Demander La Parole</button>
+            </div>
         </div>
        
     </div>
 
-<div id="login-popup" class="modal col-md-6">
-  
-  <form class="form-login">
-    <div class="credentials">
-      <label for="uname"><b>Username</b></label>
-      <input id="username" type="text" placeholder="Enter Username" name="uname" required>
-
-      <label for="password"><b>Password</b></label>
-      <input id="password" type="password" placeholder="Enter Password" name="password" required>
-        
-      <button id="login" type="submit">Se Connecter</button>
-    </div>
-
-    <div class="cancel-container">
-      <button type="button" onclick="document.getElementById('login-popup').style.display='none'" class="cancelbtn">Annuler</button>
-    </div>
-  </form>
-</div>
-
 <script>
-// Get the modal
-var modal = document.getElementById('login-popup');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-getLocalStream();
-setEventListeners();
-onLogIn();
+    getLocalStream();
+    setEventListeners();
+    onLogIn();
 
 </script>
 </body>
