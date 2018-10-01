@@ -3,12 +3,27 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Connextion</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+
+    <!-- LOGIN Stuff -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="css/login-util.css">
+    <link rel="stylesheet" type="text/css" href="css/login-main.css">
+<!-- END of LOGIN Stuff -->
 
     <script src="js/jquery.js"           ></script>
     <script src="js/adapter.js"          ></script>
@@ -22,10 +37,55 @@
     
 </head>
 
-<body>
+
+<body style="background-image: url('assets/login-back.png');
+                            background-repeat: no-repeat;                   
+                            background-position:center;
+                            background-size: auto 100%">
+<!-- LOGIN Stuff -->
+    <div id="sign-in" class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                    <span class="login100-form-title">
+                        Bienvenue
+                    </span>
+
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Le nom d'utilisateur est obligatoire.">
+                        <input id="username" class="input100" type="text" name="username" placeholder="Nom d'utilisateur">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate = "Le mot de passe est obligatoire.">
+                        <input id="password" class="input100" type="password" name="pass" placeholder="Mot de passe">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="text-right p-t-13 p-b-23">
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button id="login" class="login100-form-btn">
+                            Se Connecter
+                        </button>
+                    </div>
+
+                    <div class="flex-col-c p-t-10 p-b-40">
+                        <p id="login-error" hidden="true" style="color: red;
+                                  font-size: 18px;
+                                  font-family: Ubuntu-Bold;
+                                  width: 70%">
+                            <strog>Votre mot de passe ou nom d'utilisateur est faux</strog>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END of LOGIN Stuff -->
     
 
-    <div class="container-fluid" id="conversations">
+    <div class="container-fluid" id="conversations" hidden="true">
         <div class="row">
             <div class="col-md-10 col-sm-10 col-xs-12 col-lg-10 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"
             id="conversations-list">
@@ -34,7 +94,7 @@
         </div>
     </div>
 
-    <div class="container" id="conference">
+    <div class="container" id="conference" hidden="true">
    <!--<button onclick="document.getElementById('login-popup').style.display='block'" style="width:auto;">Se Connecter</button>
    -->
         <div class="row">
@@ -62,11 +122,22 @@
     </div>
 
 <script>
-
     getLocalStream();
     setEventListeners();
-    onLogIn();
-
+    // onLogIn();
 </script>
+
+<!-- LOGIN Stuff -->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <script src="js/login-main.js"></script>
+<!-- END of LOGIN Stuff -->
+
 </body>
 </html>

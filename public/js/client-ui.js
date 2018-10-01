@@ -54,10 +54,10 @@ function onConversation(conv){
 }
 
 function onLogIn(){
-    // var userName = $("#username").val();
-    var userName = "faysal";
-    // var passWord = $("#password").val();
-    var passWord = "f";
+    var userName = $("#username").val();
+    // var userName = "faysal";
+    var passWord = $("#password").val();
+    // var passWord = "f";
     login(userName,passWord);
 }
 
