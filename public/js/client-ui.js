@@ -54,8 +54,10 @@ function onConversation(conv){
 }
 
 function onLogIn(){
-    var userName = $("#username").val();
-    var passWord = $("#password").val();
+    // var userName = $("#username").val();
+    var userName = "faysal";
+    // var passWord = $("#password").val();
+    var passWord = "f";
     login(userName,passWord);
     $("#login").prop("disabled",true);
     $("#logout").prop("disabled",false);
