@@ -120,10 +120,11 @@ function  login(userName,password,socket){
     if(password){
         var userInstance = new user(userName,socket);
         sendConversationList(userInstance);
-
         users.push(userInstance);
+        socket.emit("loginSuccess");
     }else{
         console.log("pass wrong");
+        socket.emit("loginFailed");
     }
     ///-------------------------------------------
 
@@ -371,61 +372,4 @@ function findProgrammedConversation(convId){
     //console.log(i);
     if(i<programmedConversations.length) return i;
     return -1;
-}
-//////////////////////////////////////////////////////////////////////
-/*
-
-//creer un nouveau utilisateur de type medecin 
-function newUseer(speciality,firstName, lastName){
-    return {
-        speciality : speciality,
-        firstName : firstName,
-        lastName : lastName
-    };
-}
-
-
-function conversation(initiator){
-    this.initiator = initiator;
-    this.moderator = null;
-    this.participants = [];
-}
-
-
-
-function findConversationById(participentId){
-    var i = 0;
-    while(i<conversations.length){
-        if(inConversation(participentId,conversations[i])){
-            return conversations[i];
-        }
-    }
-    return false;
-}
-
-function inConversation(participentId,conversation){
-   return (conversation.participants.indexOf(participentId)>0);
-}
-
-function isBusy(UserId){
-    if(findConversationById(UserId)) return true;
-    return false;
-}
-
-
-
-function findUserIndexById(userId){
-    var i  =  0;
-    while ((i<users.length)&&(userId  !=  users[i].socket.id))i++;
-    if (i<users.length) return i;
-    return false;
-}
-
-*/
-
-
-function showConnectedUsers(){
-    for(var i in users){
-        console.log("user ",users[i].userName,users[i].socket.id);
-    }
 }

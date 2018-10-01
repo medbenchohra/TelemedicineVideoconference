@@ -1,5 +1,14 @@
 socket = io.connect(serverAddress);
 
+socket.on("loginSuccess", function() {
+    console.log("login successfull");
+    showConversations();
+});
+
+socket.on("loginFailed", function() {
+    console.log("login failed");
+});
+
 socket.on("user",function(data){
     console.log("got new user "+data.userName);
     addUser(data.userId,data.userName);
