@@ -14,9 +14,10 @@
 }
 
 #video-list{
-    margin : 35% 0% 0% 0%;
+    padding : 0 5px 0 0; 
+    margin : 25% 0% 0% 0%;
     /*height:400px;*/
-    background-color: #4CAF50;
+    /*background-color: #4CAF50;*/
     left: 0%
 }
 
@@ -62,12 +63,20 @@ p{
     z-index: 2;
     width:100%;
     height:auto;
-    max-height: 150px;
-    margin:5px 10px 5px 10px;
+    max-height: 350px;
+    margin-bottom: 5px;
 }
 
 #control-buttons {
     position: absolute;
     top: 8%;
     right: 5%;
+}
+
+.highlighted {
+    box-shadow: 0 3px 20px 0px #00ff36;
+}
+
+.highlighted-pending {
+    box-shadow: 0 3px 20px 0px red;
 }

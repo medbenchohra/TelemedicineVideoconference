@@ -92,8 +92,8 @@ io.on('connection',function(socket){
     });
 
     /// quitter une conversation 
-    socket.on("leave", function(data){
-        leave(data.convId,socket.id);
+    socket.on("leaveConversation", function(data){
+        leaveConversation(data.convId,socket.id);
     });
 
     /// deconnecter
@@ -110,12 +110,23 @@ io.on('connection',function(socket){
     socket.on('ice',function(data){
         ice(data.ice,socket.id,data.receiverId);
     });
+
+    socket.on('askPermission', function(data) {
+        var conv = findInCurrentConversations(data.convId);
+        if (conv > -1) {
+            conversations[conv].moderator.socket.emit('askPermission',{userId:socket.id});
+        }
+    });
+
+    socket.on('grantPermission', function(data) {
+        grantPermission(data.convId, data.userId);
+    });
    
 });
 
 
 ///fonction de connection 
-function  login(userName,password,socket){
+function  login(userName, password, socket){
     // a changer avec l'arrive de la base de données 
     ///-----------------------------------------------
     if(password !== '!'){
@@ -133,6 +144,14 @@ function  login(userName,password,socket){
 
 }
 
+function grantPermission(convId, userId) {
+    conv = findInCurrentConversations(convId);
+    if (conv > -1) {
+        conversations[conv].activeUser = userId;
+        conversations[conv].broadcast('grantPermission',{userId: userId});
+    }
+}
+
 /// fonction de deconnexion
 function logout(userId){
 
@@ -141,20 +160,25 @@ function logout(userId){
 
 /// fonction de joindre une conversation
 function join(convId,userId){
-    console.log("joining conversation "+convId);
+   console.log("joining conversation "+convId);
    var conv = getConversation(convId);
    if(conv){
         user1 = findUserById(userId);
+        if(conv.setModerator(user1)){
+            conv.activeUser = userId;
+            user1.socket.emit("joinSuccess",{moderator: true, activeUser: conv.activeUser});
+        }
+        else user1.socket.emit("joinSuccess",{moderator : false, activeUser: conv.activeUser});
+        if (conv.activeUser == null) {
+            conv.activeUser = userId;
+        }
         conv.broadcast("join",{
             userId:userId,
-            userName:user1.userName
+            userName:user1.userName,
+            activeUser: conv.activeUser
         });
         conv.sendUsersList(user1);
         conv.add(user1);
-        if(conv.setModerator(user1)){
-            user1.socket.emit("joinSuccess",{moderator : true});
-        }
-        else user1.socket.emit("joinSuccess",{moderator : false});
    }
    //console.log(" active conversations "+conversations.length);
 }
@@ -182,13 +206,16 @@ function createConversation(convId){
 
 
 /// fonction de quitter une conversation
-function leave(convId,userId){
-    var convIndex = findConversationById(convId);
-    if(convIndex>-1){
+function leaveConversation(convId,userId){
+    var convIndex = findInCurrentConversations(convId);
+    if(convIndex > -1){
+        if (conversations[convIndex].activeUser === userId) {
+            grantPermission(convId, conversations[convIndex].moderator.socket.id);
+        }
         conversations[convIndex].remove(userId);
-        conversations[convIndex].broadcast('leave',{userId : userId});
+        conversations[convIndex].broadcast('leaveConversation',{userId : userId});
     }else{
-        console.log("converssation doesn't exist");
+        console.log("conversation doesn't exist");
     }
 }
 
@@ -224,6 +251,7 @@ function conversation(config){
     this.id = config.id;
     this.moderator = null;
     this.memebers = [];
+    this.activeUser = null;
 
     //methods
     this.add= addMemeber;
@@ -377,3 +405,4 @@ function showConnectedUsers(){
         console.log("user ",users[i].userName,users[i].socket.id);
     }
 }
+

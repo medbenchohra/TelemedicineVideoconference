@@ -19,10 +19,16 @@ function addUserVideo(userId){
 }
 
 //mettre en evidence l'utilisateur ayant la main (active user)
-function highlightActiveUser(exActiveUserId,activUserId){
-    $("#vid-"+activUserId).css("box-shadow","#0aff00");
-    $("#vid-"+exActiveUserId).css("box-shadow","");
+function highlightActiveUser(exActiveUserId,activeUserId){
+    $("#vid-"+exActiveUserId).removeClass("highlighted");
+    $("#vid-"+activeUserId).addClass("highlighted");
 }
+
+
+function highlightPendingUser(userId) {
+    $("#vid-"+userId).addClass("highlighted-pending");
+}
+
 
 //suprimer le stream d'un utilisateur
 function removeUserVideo(userId){
@@ -42,6 +48,17 @@ function hideConverationList(){
 //affichee la liste des conversation 
 function showConversationList(){
     $("#conversations-list").show();
+}
+
+function changeActiveUser(newActiveUser){
+    var newUser = getUserIndexById(newActiveUser);
+    if(newUser>-1){
+        highlightActiveUser(activeSpeakerId, newActiveUser);
+        document.getElementById("active-speaker").srcObject = connectedUsers[newUser].stream;
+        activeSpeakerId = newActiveUser;
+    }else {
+        document.getElementById("active-speaker").srcObject = localStream;
+    }
 }
 
 function onConversation(conv){
@@ -70,6 +87,8 @@ function onLogOut(){
 function setEventListeners(){
     $("#login").on('click',onLogIn);
     $("#logout").on('click',onLogOut);
+    $("#ask-permission").on('click',askPermission);
+
 }
 
 

@@ -15,6 +15,13 @@ function setPeerListeners(peer, userId){
         console.log("stream", event.stream);
         if(event.stream){
             document.getElementById("vid-"+userId).srcObject = event.stream;
+            var user = getUserIndexById(userId);
+            if(user>-1){
+                connectedUsers[user].stream = event.stream;
+                if(connectedUsers.length ==1){
+                    document.getElementById("active-speaker").srcObject = event.stream;
+                }
+            }
         }
     };
 }

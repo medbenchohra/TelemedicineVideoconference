@@ -1,6 +1,6 @@
 let socket;
 let peerConnections = [];
-let currentConversation = null;
+let currentConversationId = null;
 let conversationsList = [];
 let activeSpeakerId = null;
 let conversationsContainer = null;

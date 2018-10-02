@@ -3,6 +3,7 @@ function user(id,userName,peer){
     this.id = id;
     this.userName = userName;
     this.peer = peer;
+    this.stream = null;
     this.answer = sendSDPAnswer;
     this.offer = sendSDPOffer;
 }
