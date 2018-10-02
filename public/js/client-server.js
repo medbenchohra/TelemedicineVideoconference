@@ -1,5 +1,16 @@
 socket = io.connect(serverAddress);
 
+socket.on("loginSuccess", function() {
+    console.log("login successfull");
+    getLocalStream();
+    showConversations();
+});
+
+socket.on("loginFailed", function() {
+    console.log("login failed");
+    showLoginError();
+});
+
 socket.on("user",function(data){
     console.log("got new user "+data.userName);
     addUser(data.userId,data.userName);
@@ -14,6 +25,7 @@ socket.on("conversation", function(data){
 socket.on("joinSuccess", function(data){
     console.log("joined successfully");
     moderator = data.moderator;
+    showConference();
 });
 
 socket.on("sdp", function(data){

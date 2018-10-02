@@ -14,7 +14,7 @@ function addToConversationsContainer(conversation){
 //ajouter le stream d'un utilisateur à la liste des streams
 function addUserVideo(userId){
     $("#video-list").append(
-        "<video id='vid-"+userId+"' class='video-item' autoplay playsinline></video>"
+        "<video id='vid-"+userId+"' class='video-item' autoplay muted playsinline></video>"
     );
 }
 
@@ -55,11 +55,10 @@ function onConversation(conv){
 
 function onLogIn(){
     var userName = $("#username").val();
+    // var userName = "faysal";
     var passWord = $("#password").val();
+    // var passWord = "f";
     login(userName,passWord);
-    $("#login").prop("disabled",true);
-    $("#logout").prop("disabled",false);
-    
 }
 
 function onLogOut(){
@@ -71,4 +70,31 @@ function onLogOut(){
 function setEventListeners(){
     $("#login").on('click',onLogIn);
     $("#logout").on('click',onLogOut);
+}
+
+
+function showSignIn(){
+    $("#sign-in").show();
+    $("#conference").hide();
+    $("#conversations").hide();
+}
+
+function showConference(){
+    $("#conference").show();
+    $("#sign-in").hide();
+    $("#conversations").hide();
+}
+
+function showConversations(){
+    $("#conference").hide();
+    $("#sign-in").hide();
+    $("#conversations").show();
+}
+
+function showLoginError(){
+    $("#login-error").show();
+}
+
+function hideLoginError(){
+    $("#login-error").hide();
 }
