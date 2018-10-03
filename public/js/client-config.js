@@ -1,5 +1,5 @@
 
-let serverAddress = "localhost:8080"; // using local network
+let serverAddress = "10.0.0.3:8080"; // using local network
 
 let iceServersConfig = {'iceServers':[ 
         {'url':'stun:stun2.l.google.com:19302'},
