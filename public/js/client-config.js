@@ -1,7 +1,5 @@
 
 let serverAddress = "localhost:8080"; // using local network
-// const serverAddress = process.env.serverAddress; //using environment variable
-// let serverAddress = "localhost:8080"; // using localhost
 
 let iceServersConfig = {'iceServers':[ 
         {'url':'stun:stun2.l.google.com:19302'},
