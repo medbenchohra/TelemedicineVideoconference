@@ -123,13 +123,6 @@ function hideValidate(input) {
 ///----------------------------------------------------------------------------
 
 function onLogIn(){
-    /*
-    var userName = $("#username").val();
-    // var userName = "faysal";
-    var passWord = $("#password").val();
-    // var passWord = "f";
-    login(userName,passWord);
-    */
    var input = $('.validate-input .input100');
    var check = true;
 
@@ -139,12 +132,9 @@ function onLogIn(){
             check=false;
         }
     }
-    console.log("login ",check);
     if(check) {
         var userName = $("#username").val();
-        // var userName = "faysal";
         var passWord = $("#password").val();
-        // var passWord = "f";
         login(userName,passWord);
     }
 }
@@ -187,4 +177,11 @@ function showLoginError(){
 
 function hideLoginError(){
     $("#login-error").hide();
+}
+
+function setElementSizes(){
+    var windowHeight = $(window).height();
+    var windowWidth = $(window).width();
+
+    
 }
