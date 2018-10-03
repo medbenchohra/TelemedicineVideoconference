@@ -57,6 +57,7 @@
         $( document ).ready(function() {
             showSignIn();
             setEventListeners();
+            //setElementSizes();
         });
     </script>
     
@@ -111,7 +112,15 @@
     </div>
     <!-- END of LOGIN Stuff -->
     
-    
+    <div class="container-fluid" id="top-bar">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-8">
+                <p id="my-username"></p>
+                <button id="logout" class="btn btn-danger btn-lg"><strong> Déconnecter  </strong></button>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid" id="conversations" >
         <div class="row">
             <div class="col-md-10 col-sm-10 col-xs-12 col-lg-10 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"
