@@ -18,6 +18,9 @@ function setPeerListeners(peer, userId){
             var user = getUserIndexById(userId);
             if(user>-1){
                 connectedUsers[user].stream = event.stream;
+                if (userId == activeSpeakerId) {
+                    changeActiveUser(userId);
+                }
                 if(connectedUsers.length ==1){
                     document.getElementById("active-speaker").srcObject = event.stream;
                 }
