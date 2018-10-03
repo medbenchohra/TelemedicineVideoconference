@@ -24,10 +24,6 @@ body{
 }
 
 #video-list{
-    padding : 0 5px 0 0; 
-    margin : 25% 0% 0% 0%;
-    /*height:400px;*/
-    /*background-color: #4CAF50;*/
     overflow-y: hidden;
     max-height: 500px;
 }
@@ -63,15 +59,15 @@ p{
     height: auto;
     z-index: 3;
     position: absolute;
-    top: 5%;
+    top: 0%;
     left: 5%;
 }
 #active-speaker{
-    width:80%;
+    width:70%;
     height:auto ;
     z-index: 2;
     position: absolute;
-    top : 20%;
+    top : 15%;
     left : 15%;
 }
 
@@ -85,7 +81,7 @@ p{
 
 #control-buttons {
     position: absolute;
-    top: 8%;
+    top: 3%;
     right: 5%;
 }
 
@@ -100,4 +96,21 @@ p{
 video {
     border-radius: 5px;
     box-shadow: 0 3px 20px 0px #000000;
+}
+
+#top-bar{
+    padding : 15px;
+}
+
+#logout{
+    padding : 5px;
+    position:absolute;
+    right:0px;
+    display: inline-block;
+}
+
+#my-username{
+    font-size : 18px;
+    color: black;
+    display: inline-block;
 }

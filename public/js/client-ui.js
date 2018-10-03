@@ -140,8 +140,9 @@ function onLogIn(){
 }
 
 function onLogOut(){
-    $("#login").prop("disabled",false);
-    $("#logout").prop("disabled",true);
+    leaveConversation(currentConversationId);
+    logout();
+    showSignIn();
 }
 
 
@@ -157,18 +158,21 @@ function showSignIn(){
     $("#sign-in").show();
     $("#conference").hide();
     $("#conversations").hide();
+    $("#top-bar").hide();
 }
 
 function showConference(){
     $("#conference").show();
     $("#sign-in").hide();
     $("#conversations").hide();
+    $("#top-bar").show();
 }
 
 function showConversations(){
     $("#conference").hide();
     $("#sign-in").hide();
     $("#conversations").show();
+    $("#top-bar").show();
 }
 
 function showLoginError(){
@@ -178,10 +182,17 @@ function showLoginError(){
 function hideLoginError(){
     $("#login-error").hide();
 }
-
+/*
 function setElementSizes(){
     var windowHeight = $(window).height();
     var windowWidth = $(window).width();
 
-    
-}
+    let topBar = $("#top-bar")
+    let videoList = $("#video-list");
+    let screen = $("#main-screen");
+
+    topBar.css("height", "50px;");
+    videoList.css("height",(windowHeight-150)+"px");
+    videoList.css("padding-top",0.15*(windowHeight-50)+"px");
+    screen.css("height",(windowHeight-150)+"px");
+}*/

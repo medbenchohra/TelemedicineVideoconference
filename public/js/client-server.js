@@ -2,8 +2,11 @@ socket = io.connect(serverAddress);
 
 socket.on("loginSuccess", function() {
     console.log("login successfull");
+    document.getElementById("my-username").innerHTML = $("#username").val();
     getLocalStream();
     showConversations();
+    $("#username").val('');
+    $("#password").val('');
 });
 
 socket.on("loginFailed", function() {
