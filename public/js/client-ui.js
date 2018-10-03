@@ -19,7 +19,7 @@ function addUserVideo(userId){
 }
 
 function onVideoItemClick(target) {
-    concole.log("I clicked on a user video item");
+    console.log("I clicked on a user video item");
     if ($("#"+target.id).hasClass("highlighted-pending")) {
         var id = target.id.split("-")[1];
         grantPermission(id);
@@ -28,11 +28,11 @@ function onVideoItemClick(target) {
 }
 
 //mettre en evidence l'utilisateur ayant la main (active user)
-function highlightActiveUser(exActiveUserId,activeUserId){
+function highlightActiveUser(exActiveUserId, activeUserId){
+    console.log("highlighting active user : ",activeUserId);
     $("#vid-"+exActiveUserId).removeClass("highlighted");
     $("#vid-"+activeUserId).addClass("highlighted");
 }
-
 
 function highlightPendingUser(userId) {
     $("#vid-"+userId).addClass("highlighted-pending");
@@ -60,18 +60,16 @@ function showConversationList(){
 }
 
 function changeActiveUser(newActiveUser) {
-  //  if (newActiveUser != activeSpeakerId) {
-        console.log("changing active user");
-        var newUser = getUserIndexById(newActiveUser);
-        if(newUser>-1){
-            console.log(connectedUsers[newUser].stream);
-            highlightActiveUser(activeSpeakerId, newActiveUser);
-            document.getElementById("active-speaker").srcObject = connectedUsers[newUser].stream;
-            activeSpeakerId = newActiveUser;
-        }else {
-            document.getElementById("active-speaker").srcObject = localStream;
-        }
-    //}
+    console.log("changing active user");
+    var newUser = getUserIndexById(newActiveUser);
+    if(newUser > -1){
+        console.log(connectedUsers[newUser].stream);
+        document.getElementById("active-speaker").srcObject = connectedUsers[newUser].stream;
+    }else {
+        document.getElementById("active-speaker").srcObject = localStream;
+    }
+    highlightActiveUser(activeSpeakerId, newActiveUser);
+    activeSpeakerId = newActiveUser;
 }
 
 function onConversation(conv){
