@@ -77,10 +77,10 @@ p{
 
 .video-item {
     z-index: 2;
-    width:100%;
+    width:80%;
     height:auto;
     max-height: 350px;
-    margin-bottom: 5px;
+    margin: 5%;
 }
 
 #control-buttons {
