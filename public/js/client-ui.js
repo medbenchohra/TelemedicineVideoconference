@@ -13,9 +13,12 @@ function addToConversationsContainer(conversation){
 
 //ajouter le stream d'un utilisateur à la liste des streams
 function addUserVideo(userId){
-    $("#video-list").append(
-        "<video id='vid-"+userId+"' class='video-item' onclick='onVideoItemClick(this)' autoplay muted playsinline></video>"
-    );
+    var userIndex = getUserIndexById(userId);
+    var user = connectedUsers[userIndex];
+    var textElement = `<p class='text-item'> ${user.userName} </p>`;
+    var videoElement = `<video id='vid-${userId}' class='video-item' onclick="onVideoItemClick(this)" autoplay muted playsinline></video>`;
+
+    $("#video-list").append(textElement + videoElement);
 }
 
 function onVideoItemClick(target) {
