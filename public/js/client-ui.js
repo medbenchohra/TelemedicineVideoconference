@@ -30,8 +30,13 @@ function onVideoItemClick(target) {
 //mettre en evidence l'utilisateur ayant la main (active user)
 function highlightActiveUser(exActiveUserId, activeUserId){
     console.log("highlighting active user : ",activeUserId);
-    $("#vid-"+exActiveUserId).removeClass("highlighted");
-    $("#vid-"+activeUserId).addClass("highlighted");
+    $("#vid-" + exActiveUserId).removeClass("highlighted");
+    $("#vid-" + activeUserId).addClass("highlighted");
+    if(iAmActiveUser) {
+        $("#selfie").hide();
+    } else {
+        $("#selfie").show();
+    }
 }
 
 function highlightPendingUser(userId) {
@@ -65,8 +70,10 @@ function changeActiveUser(newActiveUser) {
     if(newUser > -1){
         console.log(connectedUsers[newUser].stream);
         document.getElementById("active-speaker").srcObject = connectedUsers[newUser].stream;
+        iAmActiveUser = false;
     }else {
         document.getElementById("active-speaker").srcObject = localStream;
+        iAmActiveUser = true;
     }
     highlightActiveUser(activeSpeakerId, newActiveUser);
     activeSpeakerId = newActiveUser;

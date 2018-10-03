@@ -7,3 +7,4 @@ let conversationsContainer = null;
 let connectedUsers = [];
 let localStream;
 let moderator = false;
+let iAmActiveUser = false;

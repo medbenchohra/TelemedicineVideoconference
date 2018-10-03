@@ -127,8 +127,6 @@ io.on('connection',function(socket){
 
 ///fonction de connection 
 function  login(userName, password, socket){
-    // a changer avec l'arrive de la base de données 
-    ///-----------------------------------------------
     if(password !== '!'){
         var userInstance = new user(userName,socket);
         sendConversationList(userInstance);
@@ -139,9 +137,6 @@ function  login(userName, password, socket){
         console.log("wrong password");
         socket.emit("loginFailed");
     }
-    ///-------------------------------
-
-
 }
 
 function grantPermission(convId, userId) {
