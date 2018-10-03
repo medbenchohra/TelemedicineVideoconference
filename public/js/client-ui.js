@@ -1,7 +1,7 @@
 
 //ajouter une conversation a la liste afichee
 function addToConversationsContainer(conversation){
-    var HTML = "<p id='title-"+conversation.id+"'>"+conversation.title+"</p>";
+    var HTML = "<p class='conversation-title' id='title-"+conversation.id+"'>"+conversation.title+"</p>";
     var HTML = "<div class='conversation' id='conv-"+conversation.id +"'>"+ HTML +"</div>";
     $("#conversations-list").append(HTML);
     $("#conv-"+conversation.id).on('click',function(e){

@@ -5,6 +5,13 @@
 #conversations-list{
     height:100%;
     z-index: 1;
+    margin-top: 60px;
+}
+
+.conversation-title {
+    font-family: Ubuntu-Bold;
+    font-size: 24px;
+    color: blue;
 }
 
 
@@ -21,13 +28,14 @@
     left: 0%
 }
 
-.conversation{
+.conversation {
     background-color: white;
+    height: 100px;
+    width: 50%;
     border-radius: 10px;
     border : solid black 1px;
-    margin : 0px 2px 0px 2px;
-    font-family: Ubuntu-Bold;
-    font-size: 18px;
+    margin : 2px;
+    margin-left: 25%;
 }
 
 p{
