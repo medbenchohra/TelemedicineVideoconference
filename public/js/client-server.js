@@ -15,6 +15,7 @@ socket.on("user",function(data){
     console.log("got new user "+data.userName);
     addUser(data.userId,data.userName);
     addUserVideo(data.userId);
+    changeActiveUser(data.activeUser);
 });
 
 socket.on("conversation", function(data){

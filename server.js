@@ -172,12 +172,12 @@ function join(convId,userId){
         if (conv.activeUser == null) {
             conv.activeUser = userId;
         }
+        conv.sendUsersList(user1);
         conv.broadcast("join",{
             userId:userId,
-            userName:user1.userName,
+            userName:user1.userName,    
             activeUser: conv.activeUser
         });
-        conv.sendUsersList(user1);
         conv.add(user1);
    }
    //console.log(" active conversations "+conversations.length);
@@ -208,7 +208,7 @@ function createConversation(convId){
 /// fonction de quitter une conversation
 function leaveConversation(convId,userId){
     var convIndex = findInCurrentConversations(convId);
-    if(convIndex > -1){
+    if(convIndex > -1) {
         if (conversations[convIndex].activeUser === userId) {
             grantPermission(convId, conversations[convIndex].moderator.socket.id);
         }
@@ -317,7 +317,8 @@ function sendUsersList(user1){
         console.log("sent ",i);
         user1.socket.emit("user",{
             userId : this.memebers[i].socket.id,
-            userName : this.memebers[i].userName
+            userName : this.memebers[i].userName,  
+            activeUser: this.activeUser
         });
     }
 }
