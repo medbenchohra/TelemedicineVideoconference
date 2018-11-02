@@ -9,7 +9,7 @@ var conversations = [];
 var programmedConversations = [
     {
         id:0,
-        title : "conversation 1",
+        title : "Conversation 1",
         moderator : "charef",
         members : [
             "faysal",
@@ -19,7 +19,7 @@ var programmedConversations = [
     },
     {
         id:1,
-        title : "conversation 2",
+        title : "Conversation 2",
         moderator :"benchohra" ,
         members : [
             "charef",
@@ -29,7 +29,7 @@ var programmedConversations = [
     },
     {
         id:2,
-        title : "conversation 3",
+        title : "Conversation 3",
         moderator : "faysal",
         members : [
             "charef",
@@ -39,7 +39,7 @@ var programmedConversations = [
     },
     {
         id:3,
-        title : "conversation 4",
+        title : "Conversation 4",
         moderator : "faysal",
         members : [
             "charef",
@@ -49,7 +49,7 @@ var programmedConversations = [
     },
     {
         id:4,
-        title : "conversation 5",
+        title : "Conversation 5",
         moderator : "faysal",
         members : [
             "charef",
@@ -114,7 +114,11 @@ io.on('connection',function(socket){
     socket.on('askPermission', function(data) {
         var conv = findInCurrentConversations(data.convId);
         if (conv > -1) {
-            conversations[conv].moderator.socket.emit('askPermission',{userId:socket.id});
+            if(socket.id !== conversations[conv].moderator.socket.id) {
+                conversations[conv].moderator.socket.emit('askPermission',{userId:socket.id});
+            }else{
+                grantPermission(data.convId,socket.id);
+            }
         }
     });
 
@@ -175,7 +179,6 @@ function join(convId,userId){
         });
         conv.add(user1);
    }
-   //console.log(" active conversations "+conversations.length);
 }
 
 function getConversation(convId){
@@ -202,12 +205,21 @@ function createConversation(convId){
 
 /// fonction de quitter une conversation
 function leaveConversation(convId,userId){
+    console.log("user left conversation : ", userId);
     var convIndex = findInCurrentConversations(convId);
     if(convIndex > -1) {
-        if (conversations[convIndex].activeUser === userId) {
-            grantPermission(convId, conversations[convIndex].moderator.socket.id);
-        }
         conversations[convIndex].remove(userId);
+        var moderator = conversations[convIndex].moderator;
+        if (conversations[convIndex].activeUser === userId) {
+            if (moderator && (userId !== moderator.socket.id)) {
+                grantPermission(convId, conversations[convIndex].moderator.socket.id);
+            }
+            else {
+                if (conversations[convIndex].memebers.legnth > 0) {
+                    grantPermission(convId, conversations[convIndex].memebers[0].socket.id);
+                }
+            }
+        }
         conversations[convIndex].broadcast('leaveConversation',{userId : userId});
     }else{
         console.log("conversation doesn't exist");
@@ -249,7 +261,7 @@ function conversation(config){
     this.activeUser = null;
 
     //methods
-    this.add= addMemeber;
+    this.add = addMemeber;
     this.remove = removeMemeber;
     this.get = getMemeber;
     this.getIndex = getMemeberIndex;
@@ -265,16 +277,16 @@ function addMemeber(user1){
 }
 
 function removeMemeber(userId){
-    var i = this.getMemeberIndex(userId);
-    if(i>-1){
-        if(i<this.memebers.length - 1)this.memebers[i]=this.members[this.memebers.length - 1];
-        this.memebers.pop();
+    var i = this.getIndex(userId);
+    if(i > -1){
+        if(i < this.memebers.length-1) this.memebers[i] = this.memebers.pop();
+        else this.memebers.pop();
     }else{
         console.log("user doesn't exist");
     }
 }
 
-function getMemeberIndex(userId){
+function getMemeberIndex(userId) {
     var i=0;
     while((i<this.memebers.length)&&(this.memebers[i].socket.id!=userId))i++;
     if(i<this.memebers.length)return i;
@@ -282,8 +294,8 @@ function getMemeberIndex(userId){
 }
 
 function getMemeber(userId){
-    var i = this.getMemeberIndex(userId);
-    if(i>-1){
+    var i = this.getIndex(userId);
+    if(i > -1){
         return this.memebers[i];
     }else{
         console.log("user doesn't exist");
@@ -305,12 +317,9 @@ function broadcast(event,data,convId){
     }
 }
 
-function sendUsersList(user1){
-    console.log("shit in here");
-    console.log("socket is null : ",!!user1.socket);
+function sendUsersList(user) {
     for(i in this.memebers){
-        console.log("sent ",i);
-        user1.socket.emit("user",{
+        user.socket.emit("user",{
             userId : this.memebers[i].socket.id,
             userName : this.memebers[i].userName,  
             activeUser: this.activeUser

@@ -29,17 +29,20 @@ socket.on("conversation", function(data){
 socket.on("joinSuccess", function(data){
     console.log("joined successfully");
     moderator = data.moderator;
+    if (moderator){
+        document.getElementById("ask-permission").innerHTML = "Prendre la parole";
+    }else{
+        document.getElementById("ask-permission").innerHTML = "Demander la parole";
+    }
     changeActiveUser(data.activeUser);
     showConference();
 });
 
 socket.on("sdp", function(data){
-    console.log('received SDP');
     receivedSdp(data.senderId,data.description,data.offer);
 });
 
 socket.on("ice", function(data){
-    console.log('received ICE');
     receivedIceCandidate(data.senderId,data.ice);
 });
 
@@ -66,7 +69,6 @@ socket.on("grantPermission",function(data){
 function addToConversationsList(conversation){
     conversationsList.push(conversation);
     addToConversationsContainer(conversation);
-    ///...
     console.log("added conversation to list");
 }
 
@@ -76,32 +78,30 @@ function receivedSdp(senderId,description,offer){
     ///...
     if(offer) 
         connectedUsers[userIndex].answer(senderId);
-    console.log("received session description");
 }
 
 function receivedIceCandidate(senderId,ice){
     var userIndex = getUserIndexById(senderId);
     connectedUsers[userIndex].peer.addIceCandidate(ice);
-    ///...
-    console.log("received ice candidate");
 }
 
 function userLeftConversation(userId){
+    console.log ("user :"+userId+" left conversation");
     var userIndex = getUserIndexById(userId);
     connectedUsers[userIndex].peer.close();
-    if (userIndex !== lastIndex) {
-        connectedUsers[connectedUsers.length-1] = connectedUsers.pop();
+    console.log("remainning users before deletion : "+connectedUsers.length);
+    if (userIndex !== connectedUsers.length-1) {
+        connectedUsers[userIndex] = connectedUsers.pop();
     }else {
         connectedUsers.pop();
     }
+    console.log("remainning users after deletion : "+connectedUsers.length);
     removeUserVideo(userId);
-    console.log(`user ${data.userId} left the conversation`);
 }
 
 function userJoinedConversation(userId,userName){
     var user = addUser(userId,userName);
     addUserVideo(userId);
-    ///...
     user.offer(userId);
     console.log("user joined conversation");
 }
@@ -121,8 +121,9 @@ function join(convId){
 }
 
 function leaveConversation(convId){
-    console.log("someone quit the conversation");
-    socket.emit('permissionAsked',{convId:currentConversationId});
+    console.log("Quitting the conversation");
+    socket.emit('leaveConversation',{convId:currentConversationId});
+    currentConversationId = -1;
 }
 
 function logout(){

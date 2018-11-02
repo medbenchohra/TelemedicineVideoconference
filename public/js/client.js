@@ -12,7 +12,7 @@ function getPeerIndexByUserId(userId){
     var i = 0;
     while((i<connectedUsers.length)&&(connectedUsers[i].id!=userId))i++;
     if(i<connectedUsers.length)return i;
-    return -1;
+    return -1;   
 }
 
 function getUserIndexById(userId){
@@ -29,13 +29,20 @@ function addUser(userId,userName){
 function removeUser(userId){
     console.log("removing user");
     var index = getUserIndexById(userId);
-    if(index>-1){
-        if(index<connectedUsers.length-1){
+    if(index > -1) {
+        if(index < connectedUsers.length-1){
             connectedUsers[index]=connectedUsers.pop();
-        }else connectedUsers.pop();
+        } else connectedUsers.pop();
     }
 }
 
+
+function closePeers(){
+    for (i in connectedUsers){
+        connectedUsers[i].peer.close();
+        connectedUsers[i] = null;
+    }
+}
 function sendSDPOffer(receiverId){
     console.log("sending SDP offer");
     var peerr = this.peer;

@@ -12,11 +12,11 @@
 
 
     <script src="js/jquery.js"></script>
-    <!-- <script src="js/adapter.js"></script> -->
-    <!-- <script src="js/socket.io.js"></script> -->
+    <script src="js/adapter.js"></script>
+    <script src="js/socket.io.js"></script>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
 
     <!-- LOGIN Stuff -->
     <meta charset="UTF-8">
@@ -114,8 +114,8 @@
     
     <div class="container-fluid" id="top-bar">
         <div class="row">
-            <div class="col-md-2 col-md-offset-8">
-                <p id="my-username"></p>
+            <div class="col-md-3 col-md-offset-9">
+                <strong><p id="my-username"></p></strong>
                 <button id="logout" class="btn btn-danger btn-lg"><strong> Déconnecter  </strong></button>
             </div>
         </div>
@@ -141,7 +141,7 @@
                 </div>
                 <div id="control-buttons">
                     <button id="ask-permission" class="btn-lg btn-success" style="padding-right: 10px: ">Demander La Parole</button>
-                    <button id="leave" class="btn-lg btn-danger">Quitter La Conversation</button>
+                    <button id="leave" class="btn-lg btn-danger" onclick="onLeave()">Quitter La Conversation</button>
                 </div>
             </div>
             <div class="col-md-2 col-sm-4">
@@ -151,9 +151,5 @@
             </div>  
         </div>
     </div>
-
-
-
-
 </body>
 </html>

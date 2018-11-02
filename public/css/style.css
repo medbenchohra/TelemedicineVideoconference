@@ -14,7 +14,7 @@ body{
 .conversation-title {
     font-family: Ubuntu-Bold;
     font-size: 24px;
-    color: blue;
+    color: #09425A;
 }
 
 
@@ -33,12 +33,13 @@ body{
 }
 
 .conversation {
+    box-shadow: 0 3px 20px 0px #000000;
     background-color: white;
     height: 50px;
     width: 50%;
     border-radius: 10px;
     border : solid black 1px;
-    margin : 2px;
+    margin : 10px;
     margin-left: 25%;
 }
 
@@ -62,6 +63,7 @@ p{
     top: 0%;
     left: 5%;
 }
+
 #active-speaker{
     width:70%;
     height:auto ;
@@ -103,15 +105,12 @@ video {
 }
 
 #logout{
-    padding : 5px;
-    position:absolute;
-    margin-left: 100px;
+    margin-left: 20px;
     display: inline-block;
 }
 
 #my-username{
-    margin-left: 150px;
-    font-size : 18px;
-    color: black;
-    display: inline-block;
+    font-size : 16px;
+    color : black;
+    display : inline-block;
 }

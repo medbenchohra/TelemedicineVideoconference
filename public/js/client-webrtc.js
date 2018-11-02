@@ -12,24 +12,20 @@ function setPeerListeners(peer, userId){
         handleIceCandidate(event,userId);
     };
     peer.onaddstream = function(event){
-        console.log("stream", event.stream);
         if(event.stream){
-            document.getElementById("vid-"+userId).srcObject = event.stream;
+            document.getElementById(userId).srcObject = event.stream;
             var user = getUserIndexById(userId);
-            if(user>-1){
+            if(user > -1){
                 connectedUsers[user].stream = event.stream;
                 if (userId == activeSpeakerId) {
                     changeActiveUser(userId);
-                }
-                if(connectedUsers.length ==1){
-                    document.getElementById("active-speaker").srcObject = event.stream;
                 }
             }
         }
     };
 }
 
-function getLocalStream(){
+function getLocalStream() {
     navigator.mediaDevices.getUserMedia(mediaConstraints)
     .then (gotLocalStream)
     .catch(function(error){
@@ -43,7 +39,6 @@ function gotLocalStream(stream){
 }
 
 function handleIceCandidate(event,userId){
-    console.log("sending ice to :"+userId);
     if(event.candidate){
         socket.emit("ice",{
             receiverId : userId,
