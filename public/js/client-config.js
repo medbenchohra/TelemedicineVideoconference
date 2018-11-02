@@ -1,5 +1,6 @@
 
-let serverAddress = "localhost:8080"; // using local network
+
+let serverAddress = "localhost:8080"; // using local network - To be changed to the server address
 
 let iceServersConfig = {'iceServers':[ 
         {'url':'stun:stun2.l.google.com:19302'},
