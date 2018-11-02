@@ -144,7 +144,7 @@ function  login(userName, password, socket){
 }
 
 function grantPermission(convId, userId) {
-    conv = findInCurrentConversations(convId);
+    var conv = findInCurrentConversations(convId);
     if (conv > -1) {
         conversations[conv].activeUser = userId;
         conversations[conv].broadcast('grantPermission',{userId: userId});
@@ -211,11 +211,12 @@ function leaveConversation(convId,userId){
         conversations[convIndex].remove(userId);
         var moderator = conversations[convIndex].moderator;
         if (conversations[convIndex].activeUser === userId) {
+            console.log("users ", conversations[convIndex].memebers.length);
             if (moderator && (userId !== moderator.socket.id)) {
                 grantPermission(convId, conversations[convIndex].moderator.socket.id);
             }
             else {
-                if (conversations[convIndex].memebers.legnth > 0) {
+                if (conversations[convIndex].memebers.length > 0) {
                     grantPermission(convId, conversations[convIndex].memebers[0].socket.id);
                 }
             }
@@ -278,8 +279,13 @@ function addMemeber(user1){
 
 function removeMemeber(userId){
     var i = this.getIndex(userId);
-    if(i > -1){
-        if(i < this.memebers.length-1) this.memebers[i] = this.memebers.pop();
+    if(i > -1) {
+        if (userId === this.moderator.socket.id) {
+            console.log("removing moderator +**********+++++++++++++++++++++++");
+            this.moderator = null;
+        }
+        if (i < this.memebers.length-1)
+            this.memebers[i] = this.memebers.pop();
         else this.memebers.pop();
     }else{
         console.log("user doesn't exist");
@@ -302,8 +308,7 @@ function getMemeber(userId){
     }
 }
 
-function setModerator(user1){
-    //console.log("setting moderator");
+function setModerator(user1) {
     if(this.config.moderator==user1.userName){
         this.moderator=user1;
         return true;

@@ -64,7 +64,7 @@ socket.on("askPermission", function(data) {
 
 socket.on("grantPermission",function(data){
     changeActiveUser(data.userId);
-})
+});
 
 function addToConversationsList(conversation){
     conversationsList.push(conversation);
